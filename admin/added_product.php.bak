@@ -1,0 +1,18 @@
+<?php
+$folder="../img/product/";
+$code=isset($_POST['txtcode'])? $_POST['txtcode']:'';
+$name=isset($_POST['txtname'])? $_POST['txtname']:'';
+$img=isset($_FILES['files']['name'])? $_FILES['files']['name']:'';
+$size=isset($_POST['txtsize'])? $_POST['txtsize']:'';
+$price=isset($_POST['txtprice'])? $_POST['txtprice']:'';
+
+include_once('config.php');
+move_uploaded_file($_FILES['files']['tmp_name'],$folder.$img);
+$sql="INSERT INTO `tbl_products`(`pro_id`, `pro_code` , `pro_name`, `img`, `size`, `price`) 
+VALUES (NULL,'$code','$name','$img','$size','$price')";
+$retval=mysqli_query($conn, $sql);
+if(!$retval){
+    die('could not load...'.mysqli_error($conn));
+}
+include_once('index.php');
+?>

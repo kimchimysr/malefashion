@@ -1,0 +1,61 @@
+<?php 
+include_once('config.php');
+$ID=isset($_REQUEST['Proid']) ? $_REQUEST['Proid']:'';
+$query="SELECT * FROM tblproduct WHERE pro_id='$ID'";
+$result=mysqli_query($conn,$query);
+$row=mysqli_fetch_array($result);
+?>
+<html>
+<head>
+    <title>Edit Menu</title>
+    <?php
+    if(isset($_POST['delete'])){
+        include_once("delete.php");
+    }
+    else if(isset($_POST['update'])){
+        include_once("update.php");
+    }
+    else{
+    ?>
+</head>
+<body>
+    <h1>Form Edit Menu</h1>
+    <form method="post" action="<?php $_PHP_SELF ?>" enctype="multipart/form-data">
+        <table border="0" width=500 cellspacing=10>
+            <tr>
+                <td>Menu Name</td>
+                <td><input type="text" name="txtname" value="<?php echo $row['pro_name']; ?>"></td>
+            </tr>
+            <tr>
+                <td>Picture</td>
+                <td><input type="file" name="files"></td>
+            </tr>
+            <tr>
+                <td>Size</td>
+                <td><?php echo $row['size']; ?>
+                    <select name="txtsize">
+                    <option>Regular</option>
+                    <option>Large</option>
+                    <option>Small</option>
+                    <option>Grand</option>
+                </select></td>
+            </tr>
+            <tr>
+                <td>Price</td>
+                <td><input type="text" name="txtprice" value="<?php echo $row['price']; ?>"></td>
+            </tr>
+            <tr>
+                <td>Point</td>
+                <td><input type="text" name="txtpoint" value="<?php echo $row['point']; ?>"></td>
+            </tr>
+            <tr>
+                <td colspan=2><input type="submit" name="update" value="Update">
+                              <input type="submit" name="delete" value="Delete"></td>
+            </tr>
+        </table>
+    </form>
+    <?php
+        }
+    ?>
+</body>
+</html>
